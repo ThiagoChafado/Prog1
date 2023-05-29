@@ -1,13 +1,13 @@
 
 package cadastrofilmes;
-
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 
 public class TelaCadastro extends javax.swing.JFrame {
-
+    private List<Filme> filmes;
 
     public TelaCadastro() {
         initComponents();
@@ -45,6 +45,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         cbTerror = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         ccPais = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Filme");
@@ -250,13 +251,22 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
+        jButton1.setText("Mostrar Filmes");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCadastrar)
                 .addContainerGap())
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -268,7 +278,9 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCadastrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(jButton1))
                 .addContainerGap())
         );
 
@@ -285,11 +297,11 @@ public class TelaCadastro extends javax.swing.JFrame {
         String titulo = edtTitulo.getText();
         String original = edtOriginal.getText();
         String sinopse = taSinopse.getText();
-        try{ 
+        
             int duracao = Integer.parseInt(edtDuracao.getText());
-        } catch (Exception e){
-            JOptionPane.showMessageDialog(null,"Erro na conversão da duração.");
-        }
+        
+            
+        
         String generos = "";
         
         if (rbLivre.isSelected()){
@@ -320,17 +332,20 @@ public class TelaCadastro extends javax.swing.JFrame {
         int pais = ccPais.getSelectedIndex();
         String paisDeOrigem = (String) ccPais.getSelectedItem();
         String msg = "Título: "+ titulo + "\n";
-        msg +=  "Título oririnal: "+ original + "\n";
-        msg +=  "Sinopse: "+ sinopse + "\n";
-        String duracao = null;
-        msg +=  "Duração: "+ duracao + "\n";
-        msg +=  "Classificação: "+ classificacao + "\n";
-        msg +=  "Gêneros: "+ generos + "\n";
-        msg +=  "País de origem: "+ paisDeOrigem + "\n";
+        //msg +=  "Título oririnal: "+ original + "\n";
+        //msg +=  "Sinopse: "+ sinopse + "\n";
         
-        JOptionPane.showMessageDialog(null,msg);
+       // msg +=  "Duração: "+ duracao + "\n";
+       // msg +=  "Classificação: "+ classificacao + "\n";
+       // msg +=  "Gêneros: "+ generos + "\n";
+        //msg +=  "País de origem: "+ paisDeOrigem + "\n";
         
+      //  JOptionPane.showMessageDialog(null,msg);
+        Filme f = new Filme(titulo,original,sinopse);
         
+        filmes.add(f);
+        
+        JOptionPane.showMessageDialog(null, "Filme cadastrado com sucesso");
         
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
@@ -350,6 +365,25 @@ public class TelaCadastro extends javax.swing.JFrame {
     private void rbLivreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rbLivreActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_rbLivreActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String msg ="";
+        int cont=0;
+        
+        for (Filme f : filmes){
+            msg += "Filme " + cont + "\n";
+            msg += "Titulo: " + f.getTitulo()+ "\n";
+            msg += "Titulo Original: " + f.getTituloOriginal()+ "\n";
+            msg += "Sinopse: " + f.getSinopse()+ "\n";
+            msg += "----------------------------\n";
+            cont++;
+            
+        }
+        JOptionPane.showMessageDialog(null,msg);
+        
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
     public static void main(String args[]) throws InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         try{
             javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -378,6 +412,7 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField edtDuracao;
     private javax.swing.JTextField edtOriginal;
     private javax.swing.JTextField edtTitulo;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
