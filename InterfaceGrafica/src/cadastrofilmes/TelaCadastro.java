@@ -1,5 +1,6 @@
 
 package cadastrofilmes;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -11,6 +12,7 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     public TelaCadastro() {
         initComponents();
+        filmes = new ArrayList<>();
     }
 
     @SuppressWarnings("unchecked")
@@ -251,7 +253,7 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jButton1.setText("Mostrar Filmes");
+        jButton1.setText("btnBotao");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
