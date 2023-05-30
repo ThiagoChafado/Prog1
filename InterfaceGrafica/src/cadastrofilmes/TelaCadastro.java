@@ -47,7 +47,8 @@ public class TelaCadastro extends javax.swing.JFrame {
         cbTerror = new javax.swing.JCheckBox();
         jLabel8 = new javax.swing.JLabel();
         ccPais = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        btnMostrarFilmes = new javax.swing.JButton();
+        btnFiltrarFilmes = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Cadastro de Filme");
@@ -253,10 +254,17 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jButton1.setText("btnBotao");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnMostrarFilmes.setText("MostrarFilmes");
+        btnMostrarFilmes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnMostrarFilmesActionPerformed(evt);
+            }
+        });
+
+        btnFiltrarFilmes.setText("FiltrarFilmes");
+        btnFiltrarFilmes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarFilmesActionPerformed(evt);
             }
         });
 
@@ -267,7 +275,9 @@ public class TelaCadastro extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
+                .addComponent(btnMostrarFilmes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnFiltrarFilmes)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCadastrar)
                 .addContainerGap())
@@ -282,7 +292,8 @@ public class TelaCadastro extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnCadastrar)
-                    .addComponent(jButton1))
+                    .addComponent(btnMostrarFilmes)
+                    .addComponent(btnFiltrarFilmes))
                 .addContainerGap())
         );
 
@@ -368,7 +379,7 @@ public class TelaCadastro extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_rbLivreActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnMostrarFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMostrarFilmesActionPerformed
         String msg ="";
         int cont=0;
         
@@ -385,7 +396,15 @@ public class TelaCadastro extends javax.swing.JFrame {
         
         
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnMostrarFilmesActionPerformed
+
+    private void btnFiltrarFilmesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarFilmesActionPerformed
+            TelaFiltragem t = new TelaFiltragem(filmes);
+            t.setVisible(true);
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFiltrarFilmesActionPerformed
     public static void main(String args[]) throws InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
         try{
             javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -403,6 +422,8 @@ public class TelaCadastro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCadastrar;
+    private javax.swing.JButton btnFiltrarFilmes;
+    private javax.swing.JButton btnMostrarFilmes;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JCheckBox cbAcao;
     private javax.swing.JCheckBox cbAventura;
@@ -414,7 +435,6 @@ public class TelaCadastro extends javax.swing.JFrame {
     private javax.swing.JTextField edtDuracao;
     private javax.swing.JTextField edtOriginal;
     private javax.swing.JTextField edtTitulo;
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
