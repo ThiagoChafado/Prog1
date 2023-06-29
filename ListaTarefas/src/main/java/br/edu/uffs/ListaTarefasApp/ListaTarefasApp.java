@@ -6,6 +6,8 @@ package br.edu.uffs.ListaTarefasApp;
 
 import br.edu.uffs.ListaTarefas.Entities.Tarefa;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -17,11 +19,13 @@ public class ListaTarefasApp extends javax.swing.JFrame {
 
     
     private final String WS_URL = "http://localhost:8080/tarefa";
+    
     /**
      * Creates new form ListaTarefasApp
      */
     public ListaTarefasApp() {
         initComponents();
+        
     }
 
     /**
@@ -37,6 +41,9 @@ public class ListaTarefasApp extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         edtTarefa = new javax.swing.JTextField();
         btnCadastrar = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbTarefas = new javax.swing.JTable();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -49,7 +56,6 @@ public class ListaTarefasApp extends javax.swing.JFrame {
 
         jLabel1.setText("Nova tarefa");
 
-        edtTarefa.setText("jTextField1");
         edtTarefa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 edtTarefaActionPerformed(evt);
@@ -75,7 +81,7 @@ public class ListaTarefasApp extends javax.swing.JFrame {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(0, 357, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnCadastrar))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -88,6 +94,38 @@ public class ListaTarefasApp extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnCadastrar)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lista de Tarefas"));
+
+        tbTarefas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tbTarefas);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         jMenu1.setText("Opções");
@@ -117,24 +155,22 @@ public class ListaTarefasApp extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 440, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-         this.dispose();
-
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void edtTarefaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtTarefaActionPerformed
       
@@ -158,11 +194,33 @@ public class ListaTarefasApp extends javax.swing.JFrame {
                 }catch(RestClientException e){
                         JOptionPane.showMessageDialog(this, e.getMessage());
                         }
-
+        loadTableData();
 
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCadastrarActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        this.dispose();
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    private void loadTableData(){
+        RestTemplate restTemplate = new RestTemplate();
+        
+        ResponseEntity<Tarefa[]> response = restTemplate.getForEntity(WS_URL, Tarefa[].class);
+        
+        Tarefa[] tarefas = response.getBody();
+        
+        DefaultTableModel tableModel = (DefaultTableModel) tbTarefas.getModel();
+        
+        for(Tarefa tarefa : tarefas){
+            Object[] row = { tarefa.getId(), tarefa.getTarefa()};
+            tableModel.addRow(row);
+        }
+        
+    }
+    
+        
     /**
      * @param args the command line arguments
      */
@@ -208,5 +266,8 @@ public class ListaTarefasApp extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tbTarefas;
     // End of variables declaration//GEN-END:variables
 }
